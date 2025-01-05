@@ -89,7 +89,7 @@ local function teleportToMonster(system)
                             local player = game.Players.LocalPlayer
                             if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
                                 local monsterPosition = monster.HumanoidRootPart.Position
-                                local behindPosition = monsterPosition - monster.HumanoidRootPart.CFrame.LookVector * 3
+                                local behindPosition = monsterPosition - monster.HumanoidRootPart.CFrame.LookVector * 3.4
                                 player.Character.HumanoidRootPart.CFrame = CFrame.lookAt(behindPosition, monsterPosition)
                                 print("Teleported to and facing:", config.selectedMonster)
                                 return
@@ -154,10 +154,133 @@ task.spawn(function()
     while true do
         updateMonsterList("Boss")
         updateMonsterList("Mon")
-        task.wait(0) -- Adjusted to 1 second to avoid high CPU load
+        task.wait(1) -- Adjusted to 1 second to avoid high CPU load
     end
 end)
 
+local Section = Tab:NewSection("Auto Press")
+
+local VirtualInputManager = game:GetService("VirtualInputManager") -- บริการสำหรับจัดการ Input
+
+local autoPressZEnabled = false -- สถานะเปิด/ปิด Auto Press Z
+
+-- ฟังก์ชันกดปุ่ม Z อัตโนมัติ
+local function autoPressZ()
+    while autoPressZEnabled do
+        VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.Z, false, game) -- กดปุ่ม Z
+        task.wait(0.1) -- เวลาค้างปุ่ม (ปรับค่าได้)
+        VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.Z, false, game) -- ปล่อยปุ่ม Z
+        task.wait(0.5) -- เวลาระหว่างการกด (ปรับค่าได้)
+    end
+end
+
+local VirtualInputManager = game:GetService("VirtualInputManager") -- บริการสำหรับจัดการ Input
+
+local autoPressXEnabled = false -- สถานะเปิด/ปิด Auto Press X
+
+-- ฟังก์ชันกดปุ่ม X อัตโนมัติ
+local function autoPressX()
+    while autoPressXEnabled do
+        VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.X, false, game) -- กดปุ่ม X
+        task.wait(0.1) -- เวลาค้างปุ่ม (ปรับค่าได้)
+        VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.X, false, game) -- ปล่อยปุ่ม X
+        task.wait(0.5) -- เวลาระหว่างการกด (ปรับค่าได้)
+    end
+end
+
+local VirtualInputManager = game:GetService("VirtualInputManager") -- บริการสำหรับจัดการ Input
+
+local autoPressCEnabled = false -- สถานะเปิด/ปิด Auto Press C
+
+-- ฟังก์ชันกดปุ่ม C อัตโนมัติ
+local function autoPressC()
+    while autoPressCEnabled do
+        VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.C, false, game) -- กดปุ่ม C
+        task.wait(0.1) -- เวลาค้างปุ่ม (ปรับค่าได้)
+        VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.C, false, game) -- ปล่อยปุ่ม C
+        task.wait(0.5) -- เวลาระหว่างการกด (ปรับค่าได้)
+    end
+end
+
+local VirtualInputManager = game:GetService("VirtualInputManager") -- บริการสำหรับจัดการ Input
+
+local autoPressVEnabled = false -- สถานะเปิด/ปิด Auto Press V
+
+-- ฟังก์ชันกดปุ่ม V อัตโนมัติ
+local function autoPressV()
+    while autoPressVEnabled do
+        VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.V, false, game) -- กดปุ่ม V
+        task.wait(0.1) -- เวลาค้างปุ่ม (ปรับค่าได้)
+        VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.V, false, game) -- ปล่อยปุ่ม V
+        task.wait(0.5) -- เวลาระหว่างการกด (ปรับค่าได้)
+    end
+end
+
+local VirtualInputManager = game:GetService("VirtualInputManager") -- บริการสำหรับจัดการ Input
+
+local autoPressBEnabled = false -- สถานะเปิด/ปิด Auto Press B
+
+-- ฟังก์ชันกดปุ่ม B อัตโนมัติ
+local function autoPressB()
+    while autoPressBEnabled do
+        VirtualInputManager:SendKeyEvent(true, Enum.KeyCode.B, false, game) -- กดปุ่ม B
+        task.wait(0.1) -- เวลาค้างปุ่ม (ปรับค่าได้)
+        VirtualInputManager:SendKeyEvent(false, Enum.KeyCode.B, false, game) -- ปล่อยปุ่ม B
+        task.wait(0.5) -- เวลาระหว่างการกด (ปรับค่าได้)
+    end
+end
+
+Section:NewToggle("Auto Z", "Enable/Disable auto pressing Z", function(state)
+    autoPressZEnabled = state
+    if state then
+        print("Auto Z Activated")
+        task.spawn(autoPressZ)
+    else
+        print("Auto Z Deactivated")
+    end
+end)
+
+Section:NewToggle("Auto X", "Enable/Disable auto pressing X", function(state)
+    autoPressXEnabled = state
+    if state then
+        print("Auto X Activated")
+        task.spawn(autoPressX)
+    else
+        print("Auto X Deactivated")
+    end
+end)
+
+Section:NewToggle("Auto C", "Enable/Disable auto pressing C", function(state)
+    autoPressCEnabled = state
+    if state then
+        print("Auto C Activated")
+        task.spawn(autoPressC)
+    else
+        print("Auto C Deactivated")
+    end
+end)
+
+Section:NewToggle("Auto V", "Enable/Disable auto pressing V", function(state)
+    autoPressVEnabled = state
+    if state then
+        print("Auto V Activated")
+        task.spawn(autoPressV)
+    else
+        print("Auto V Deactivated")
+    end
+end)
+
+Section:NewToggle("Auto B", "Enable/Disable auto pressing B", function(state)
+    autoPressBEnabled = state
+    if state then
+        print("Auto B Activated")
+        task.spawn(autoPressB)
+    else
+        print("Auto B Deactivated")
+    end
+end)
+
+local Tab = Window:NewTab("Teleport")
 local Section = Tab:NewSection("Teleport")
 
 local folderName = "Portal"
@@ -244,4 +367,82 @@ Section:NewButton("Teleport", "Teleport to the selected location", function()
     else
         print("Please select a location first.")
     end
+end)
+
+local playersDropdown = {}  -- ตัวแปรเก็บรายชื่อผู้เล่นใน Dropdown
+
+-- ฟังก์ชันสำหรับดึงรายชื่อผู้เล่น
+local function getPlayerList()
+    local players = {}
+    for _, player in pairs(game:GetService("Players"):GetPlayers()) do
+        table.insert(players, player.Name)
+    end
+    return players
+end
+
+-- สร้าง Dropdown ที่อัพเดทผู้เล่น
+local Dropdown = Section:NewDropdown("Select Player", "Choose a player to teleport to", getPlayerList(), function(selectedPlayer)
+    selectedPlayerName = selectedPlayer
+end)
+
+-- ฟังก์ชันสำหรับวาปไปยังผู้เล่นที่เลือก
+Section:NewButton("Teleport to Player", "Teleport to the selected player", function()
+    if selectedPlayerName then
+        local targetPlayer = game:GetService("Players"):FindFirstChild(selectedPlayerName)
+        if targetPlayer then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = targetPlayer.Character.HumanoidRootPart.CFrame
+            print("Teleporting to " .. selectedPlayerName)
+        else
+            print("Player not found")
+        end
+    else
+        print("No player selected")
+    end
+end)
+
+-- ฟังก์ชันสำหรับอัพเดท Dropdown ทุกครั้งที่มีการเปลี่ยนแปลงในผู้เล่น
+local function refreshDropdown()
+    local playerList = getPlayerList()
+    local currentPlayers = {}
+
+    -- ตรวจสอบว่า Dropdown มีผู้เล่นใหม่หรือไม่
+    for _, playerName in pairs(playerList) do
+        if not playersDropdown[playerName] then
+            playersDropdown[playerName] = true
+            Dropdown:AddOption(playerName)
+        end
+    end
+
+    -- ตรวจสอบว่า มีผู้เล่นที่ออกไปจาก Dropdown หรือไม่
+    for _, playerName in pairs(playersDropdown) do
+        if not table.find(playerList, playerName) then
+            playersDropdown[playerName] = nil
+            Dropdown:RemoveOption(playerName)
+        end
+    end
+end
+
+-- รีเฟรช Dropdown ทุก 1 วินาที
+task.spawn(function()
+    while true do
+        wait(1)  -- อัพเดททุก 1 วินาที
+        refreshDropdown()
+    end
+end)
+
+local Tab = Window:NewTab("Misc")
+local Section = Tab:NewSection("Misc")
+
+Section:NewSlider("WalkSpeed", "", 500, 0, function(s) -- 500 (MaxValue) | 0 (MinValue)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = s
+end)
+
+Section:NewSlider("JumpPower", "", 500, 0, function(j) -- 500 (MaxValue) | 0 (MinValue)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = j
+end)
+
+local Tab = Window:NewTab("Setting")
+local Section = Tab:NewSection("Setting")
+Section:NewKeybind("on/off", "KeybindInfo", Enum.KeyCode.RightControl, function()
+  Library:ToggleUI()
 end)
